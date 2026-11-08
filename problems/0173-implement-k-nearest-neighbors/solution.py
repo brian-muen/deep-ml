@@ -13,19 +13,11 @@ def k_nearest_neighbors(points, query_point, k):
         List of k nearest neighbor points as tuples
         When distances are tied, points appearing earlier in the input list come first.
     """
-    n = len(points)
-    points = np.array(points)
-    distances = np.zeros(n)
+    query_point = np.asarray(query_point)
+    points = np.asarray(points)
 
-    for i, p in enumerate(points):
-        distances[i] = euclidean(p, query_point)
+    distances = np.sum((query_point - points)**2, axis=1)
     indices = np.argsort(distances, kind="stable")
     sorted_neighbors = points[indices]
-    sorted_neighbors = list(map(tuple, sorted_neighbors))
-    top_k = sorted_neighbors[:k]
-    
-    return top_k
-        
 
-def euclidean(p1, p2):
-    return np.sum((p1 - p2)**2)
+    return list(map(tuple, sorted_neighbors[:k]))
