@@ -14,10 +14,9 @@ def k_nearest_neighbors(points, query_point, k):
         When distances are tied, points appearing earlier in the input list come first.
     """
     query_point = np.asarray(query_point)
-    points = np.asarray(points)
+    arr = np.asarray(points)
 
-    distances = np.sum((query_point - points)**2, axis=1)
+    distances = np.sum((query_point - arr)**2, axis=1)
     indices = np.argsort(distances, kind="stable")
-    sorted_neighbors = points[indices]
 
-    return list(map(tuple, sorted_neighbors[:k]))
+    return [points[i] for i in indices[:k]]
